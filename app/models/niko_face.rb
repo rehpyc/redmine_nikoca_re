@@ -23,16 +23,11 @@ end
 # 定義する
 # @abstract ニコカレへ記入する気分を保持する
 class NikoFace < ActiveRecord::Base
-  unloadable
-
-  attr_accessible :feeling, :comment
-
   validates_presence_of :feeling
-  validates_length_of :comment, :maximum => 128
+  validates_length_of   :comment, :maximum => 128
 
-  belongs_to :author, :class_name => 'User', :foreign_key => 'author_id'
-
-  has_many :responses, :class_name => 'NikoResponse', :dependent => :destroy
+  belongs_to :author,    :class_name => 'User',         :foreign_key => 'author_id'
+  has_many   :responses, :class_name => 'NikoResponse', :dependent   => :destroy
 
   # レスポンスを既読とする
   # @params user [User] カレントユーザ
@@ -62,7 +57,7 @@ class NikoFace < ActiveRecord::Base
   # @param dates [Array] 取得対象となる日付リスト
   # @return [Hash] プロジェクトメンバの気分
   # project_member_faces[user.id][date.day]
-  def self.project_member_faces(project, dates)
+  def self.project_member_faces(project, dates = [])
     project_member_faces = Hash.new
     project.members.each do |member|
       project_member_faces[member.user.name] = NikoFace.member_faces(member.user, dates)
@@ -108,4 +103,5 @@ class NikoFace < ActiveRecord::Base
     end
     return feelings.numeric_average
   end
+
 end

@@ -4,10 +4,9 @@
 # レスポンスの作成・編集・表示などのアクション処理を実装
 # @abstract NikoResponseのアクションに応じた処理を定義
 class NikoResponsesController < ApplicationController
-  unloadable
-  menu_item :redmine_nikoca_re
-  before_filter :find_project
-  before_filter :find_niko_face
+  menu_item     :redmine_nikoca_re
+  before_action :find_project
+  before_action :find_niko_face
 
   # レスポンス一覧を表示する
   def index

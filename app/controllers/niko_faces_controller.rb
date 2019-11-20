@@ -17,18 +17,17 @@ end
 # ニコカレの作成・編集・表示などのアクション処理を実装
 # @abstract NikoFaceのアクションに応じた処理を定義
 class NikoFacesController < ApplicationController
-  unloadable
-  menu_item :redmine_nikoca_re
-  before_filter :find_project, :authorize
-  before_filter :find_niko_face, :except => [:backnumber, :index, :new, :create]
+  menu_item     :redmine_nikoca_re
+  before_action :find_project, :authorize
+  before_action :find_niko_face, :except => [:backnumber, :index, :new, :create]
 
   # カレンダ構築に必要な情報をセット
-  before_filter :only => [:backnumber, :index] do
-    @backnumber = 0
-    @backnumber = params[:id].to_i if params[:id].to_i
-    @dates = get_dates(@backnumber)
-    @users = get_users(@project)
-    @niko_faces = NikoFace.project_member_faces(@project, @dates)
+  before_action :only => [:backnumber, :index] do
+    @backnumber    = 0
+    @backnumber    = params[:id].to_i if params[:id].to_i
+    @dates         = get_dates(@backnumber)
+    @users         = get_users(@project)
+    @niko_faces    = NikoFace.project_member_faces(@project, @dates)
     @team_feelings = NikoFace.team_feelings(@project, @dates)
   end
 
@@ -148,4 +147,11 @@ private
     end
     return users
   end
+
+  def niko_face_params
+    if params.key?(:niko_face)
+      params.require(:niko_face).permit(:project, :feeling, :comment)
+    end
+  end
+
 end
