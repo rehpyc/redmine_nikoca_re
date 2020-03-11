@@ -63,8 +63,9 @@ class NikoFacesController < ApplicationController
 
   # ニコカレを作成する
   def create
-    @niko_face = NikoFace.new(params[:niko_face])
-    @niko_face.date = Date.today
+    form_params = params.require(:niko_face).permit(:feeling, :comment)
+    @niko_face  = NikoFace.new(form_params)
+    @niko_face.date   = Date.today
     @niko_face.author = User.current
 
     if @niko_face.valid?
@@ -98,15 +99,16 @@ class NikoFacesController < ApplicationController
 
   # ニコカレを更新する
   def update
-    @niko_face.attributes = params[:niko_face]
-    if @niko_face.valid?
-      if @niko_face.save
-        flash[:notice] = l(:notice_successful_update)
-        redirect_to project_niko_faces_path(@project)
-      end
+    @niko_face            = NikoFace.find(params[:id])
+    @niko_face.attributes = params.require(:niko_face).permit(:feeling, :comment)
+    
+    if @niko_face.save
+      flash[:notice] = l(:notice_successful_update)
+      redirect_to project_niko_faces_path(@project)
     else
       render :action => 'edit'
     end
+
     rescue ActiveRecord::StaleObjectError
       flash.now[:error] = l(:notice_locking_conflict)
   end

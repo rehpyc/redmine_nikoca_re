@@ -1,0 +1,5 @@
+%p There was a response from "#{ link_to_user(@niko_res.author) }".
+%h3 message:
+= textilizable(@niko_res, :comment)
+%h3 url:
+= project_niko_face_url(@project, @niko_face.id)

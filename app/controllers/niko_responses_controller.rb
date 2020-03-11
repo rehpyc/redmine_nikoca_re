@@ -15,15 +15,16 @@ class NikoResponsesController < ApplicationController
 
   # レスポンスを作成する
   def create
-    @niko_response = NikoResponse.new(params[:niko_response])
-    @niko_response.author = User.current
-    @niko_response.unread = true
+    form_params          = params.require(:niko_response).permit(:comment)
+    form_params[:author] = User.current
+    form_params[:unread] = true
+    @niko_response = NikoResponse.new(form_params)
     if @niko_response.valid?
       @niko_face.responses << @niko_response
-      NikoMailer.deliver_add_response(@project, @niko_face, @niko_response)
+      NikoMailer.deliver_add_response(User.current, @project, @niko_face, @niko_response)
       redirect_to project_niko_face_path(@project, @niko_face.id)
     else
-      render 'niko_faces/show'
+      render "niko_faces/show"
     end
   end
 

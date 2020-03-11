@@ -1,0 +1,19 @@
+%div.contextual
+  = link_to_if_authorized(l(:label_conditions_new), { action: "new", project_id: @project }, class: "icon icon-add")
+%h2
+  = l(:label_redmine_nikoca_re_full)
+%br{ style: "clear:both;"}
+
+%div.contextual
+  - if @mode == "calendar"
+    = link_to(:today, project_niko_faces_mode_path(@project, "today"))
+  - else
+    = link_to(:calendar, project_niko_faces_mode_path(@project, "calendar"))
+%br{ style: "clear:both;" }
+
+- if @mode == "calendar"
+  %div.backnumber
+    = link_to('<< ' + l(:to_old), project_niko_faces_backnumber_path(@project, 1))
+  = render(partial: "niko_faces/calender")
+- else
+  = render(partial: "niko_faces/today")

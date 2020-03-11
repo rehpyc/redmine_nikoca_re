@@ -1,7 +1,7 @@
 # Redmine_Nikoca_Re プラグイン NikoResponse
 # @author yuuu(Yuhei Okazaki)
 class NikoResponse < ActiveRecord::Base
-  attr_accessible :comment
+  #attr_accessible :comment
 
   validates_presence_of :comment
   validates_length_of   :comment, :maximum => 128

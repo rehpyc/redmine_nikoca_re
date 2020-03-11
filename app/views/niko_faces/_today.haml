@@ -1,0 +1,41 @@
+- content_for(:header_tags) do
+  = stylesheet_link_tag("index.css", plugin: "redmine_nikoca_re")
+
+%table.nikocale
+  %thead
+    %tr
+      %th.username
+        = l(:field_user)
+      %th
+        %table.calender
+          %tr
+            - date_tag(Date.today, true)
+            %th.today_comment
+              = l(:label_comment_plural)
+  %tbody
+    - @users.each do |user|
+      %tr{ class: "#{ cycle("odd", "even") }" }
+        %td.yyy
+          = link_to_user(user)
+        %td.yyy
+          %table.calender
+            %tr
+              - face = @niko_faces[user.name][Date.today.day]
+              %td.today_face
+                - link_face_tag(@project, face)
+              %td.today_comment
+                - if face != nil
+                  = face.comment != "" ? face.comment : l(:no_comment)
+                  = content_tag(:span, "#{ l(:field_comment) }: #{ face.responses.size }#{ l(:comment_unit) }", class: "responseinfo")
+    %tr.team_row
+      %td
+        = l(:team_feeling)
+      %td
+        %table.calender
+          %tr
+            - feeling = @team_feelings[Date.today.day]
+            %td.today_face
+              - concat(feeling_tag(feeling))
+            %td.today_comment
+
+

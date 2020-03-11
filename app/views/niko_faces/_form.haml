@@ -1,0 +1,31 @@
+
+- content_for :header_tags do
+  = stylesheet_link_tag "index.css", plugin: "redmine_nikoca_re"
+
+= error_messages_for("niko_face")
+
+%div.box
+  %h3
+    = l(:field_feeling)
+  - feelings = [:good, :normal, :bad]
+  %div
+    %table.feeling
+      %tr
+        - feelings.each do |feeling|
+          %th
+            = l(feeling)
+      %tr
+        - feelings.each do |feeling|
+          - options       = { plugin: "redmine_nikoca_re", width: "32", height: "32" }
+          - options[:alt] = l(feeling)
+          %td
+            = image_tag(feeling.to_s + ".png", options)
+      %tr
+        - feelings.each_with_index do |feeling, index|
+          %td
+            = form.radio_button(:feeling, (index + 1).to_s)
+  %br
+  %h3
+    = l(:field_comment)
+  %div
+    = form.text_area(:comment, { cols: 80, rows: 5 })
