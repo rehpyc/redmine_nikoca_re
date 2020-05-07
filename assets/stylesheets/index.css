@@ -6,9 +6,10 @@
   padding-right: 1%;
   padding-left: 1%;
 }
-table.nikocale{
+table.nikocale {
   border: solid 1px #e4e4e4;
   border-collapse: collapse;
+  width: 100%;
 }
 table.calender{
   width: 100%;
@@ -77,5 +78,3 @@ span.responseinfo{
 .team_row{
   background-color: #F8F8A0;
 }
-
-
