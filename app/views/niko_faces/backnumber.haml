@@ -1,13 +1,20 @@
 %div.contextual
   = link_to_if_authorized(l(:label_conditions_new), { action: "new", project_id: @project }, class: "icon icon-add")
-
 %h2
   = l(:label_redmine_nikoca_re_full)
-%div.backnumber
-  - if (@backnumber == 0)
-    = link_to("<< " + l(:to_old), project_niko_faces_backnumber_path(@project, 1))
-  - else
-    = link_to("<<" + l(:to_old),  project_niko_faces_backnumber_path(@project, @backnumber + 1))
-    = link_to(l(:to_new) + " >>", project_niko_faces_backnumber_path(@project, @backnumber - 1))
 
+%span.pagination
+  %ul.pages
+    - if (@backnumber == 0)
+      %li.previous.page
+        = link_to("« " + l(:to_old), project_niko_faces_backnumber_path(@project, 1))
+      %li.next.page{ style: "margin-left: -5px;" }
+        = link_to(:today, project_niko_faces_mode_path(@project, "today"))
+    - else
+      %li.previous.page
+        = link_to("« " + l(:to_old),  project_niko_faces_backnumber_path(@project, @backnumber + 1))
+      %li.page{ style: "margin-left: -5px;" }
+        = link_to(:today, project_niko_faces_mode_path(@project, "today"))
+      %li.next.page{ style: "margin-left: -5px;" }
+        = link_to(l(:to_new) + " »", project_niko_faces_backnumber_path(@project, @backnumber - 1))
 = render(partial: "niko_faces/calender")
