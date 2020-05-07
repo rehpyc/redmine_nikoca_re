@@ -9,10 +9,10 @@
       %li.previous.page
         = link_to('« ' + l(:to_old), project_niko_faces_backnumber_path(@project, 1))
       %li.next.page{ style: "margin-left: -5px;" }
-        = link_to("本日", project_niko_faces_mode_path(@project, "today"))
+        = link_to(l(:today), project_niko_faces_mode_path(@project, "today"))
     - else
       %li.previous.page
-        = link_to("カレンダー表示", project_niko_faces_mode_path(@project, "calendar"))
+        = link_to(l(:calendar), project_niko_faces_mode_path(@project, "calendar"))
 
 - if @mode == "calendar"
   = render(partial: "niko_faces/calender")

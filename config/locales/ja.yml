@@ -20,7 +20,8 @@ ja:
   caption_feeling: "の気分"
   caption_today_feeling: "本日の気分"
   today: "1日表示"
-  to_old: "古いカレンダーへ"
-  to_new: "新しいカレンダーへ"
+  to_old: "前"
+  to_new: "次"
   calendar: "カレンダー表示"
+  today:    "本日"
 
